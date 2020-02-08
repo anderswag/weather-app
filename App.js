@@ -1,13 +1,26 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import ApiService from "./services/api";
 
 class App extends React.Component {
+  state = {
+    weatherData: undefined
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
       </View>
     );
+  }
+
+  fetchWeatherData() {
+    ApiService.fetchData("90210");
+  }
+
+  UNSAFE_componentWillMount() {
+    this.fetchWeatherData();
   }
 }
 
