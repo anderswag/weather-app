@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ApiService from "./services/api";
 
+import Hero from "./components/Hero";
 import WeatherList from "./components/WeatherList";
 
 class App extends React.Component {
@@ -13,6 +14,7 @@ class App extends React.Component {
     const { weatherData } = this.state;
     return (
       <View style={styles.container}>
+        {weatherData && <Hero list={weatherData.list} />}
         {weatherData && <WeatherList list={weatherData.list} />}
       </View>
     );
