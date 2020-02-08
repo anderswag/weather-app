@@ -10,15 +10,20 @@ class App extends React.Component {
   };
 
   render() {
+    const { weatherData } = this.state;
     return (
       <View style={styles.container}>
-        <WeatherList />
+        {weatherData && <WeatherList list={weatherData.list} />}
       </View>
     );
   }
 
   fetchWeatherData() {
-    ApiService.fetchData("90210");
+    ApiService.fetchData("90210").then(data => {
+      this.setState({
+        weatherData: data
+      });
+    });
   }
 
   UNSAFE_componentWillMount() {
