@@ -7,20 +7,22 @@ import WeatherList from "./components/WeatherList";
 
 class App extends React.Component {
   state = {
-    weatherData: undefined
+    weatherData: undefined,
+    unit: "F"
   };
 
   render() {
-    const { weatherData } = this.state;
+    const { weatherData, unit } = this.state;
     return (
       <View style={styles.container}>
         {weatherData && (
           <Hero
             cityName={weatherData.city.name}
             todayWeather={weatherData.list[0]}
+            unit={unit}
           />
         )}
-        {weatherData && <WeatherList list={weatherData.list} />}
+        {weatherData && <WeatherList list={weatherData.list} unit={unit} />}
       </View>
     );
   }
