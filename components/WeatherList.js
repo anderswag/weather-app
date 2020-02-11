@@ -66,7 +66,8 @@ class WeatherList extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 400
+    height: 300,
+    marginBottom: 30
   },
   item: {
     flexDirection: "row",

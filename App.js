@@ -7,8 +7,9 @@ import {
   Switch,
   View
 } from "react-native";
-import ApiService from "./services/api";
+import { LinearGradient } from "expo-linear-gradient";
 
+import ApiService from "./services/api";
 import Hero from "./components/Hero";
 import WeatherList from "./components/WeatherList";
 import ZipCodeInput from "./components/ZipCodeInput";
@@ -21,9 +22,17 @@ class App extends React.Component {
   };
 
   render() {
+    return (
+      <LinearGradient colors={["#6dd5ed", "#2193b0"]} style={styles.container}>
+        {this.renderContent()}
+      </LinearGradient>
+    );
+  }
+
+  renderContent() {
     const { weatherData, isFahrenheit, zipCode } = this.state;
     return (
-      <ScrollView style={styles.container}>
+      <View>
         {weatherData && (
           <Hero
             cityName={weatherData.city.name}
@@ -44,7 +53,7 @@ class App extends React.Component {
             />
           </KeyboardAvoidingView>
         )}
-      </ScrollView>
+      </View>
     );
   }
 
