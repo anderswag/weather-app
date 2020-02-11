@@ -4,13 +4,13 @@ import ConversionService from "../services/conversion";
 
 class Hero extends React.Component {
   render() {
-    const { cityName, todayWeather } = this.props;
+    const { cityName, todayWeather, isFahrenheit } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.locationText}>{cityName}</Text>
         <Text style={styles.weatherText}>{todayWeather.weather[0].main}</Text>
         <Text style={styles.temperatureText}>
-          {this.getTemperature()} {"\u00b0"}
+          {this.getTemperature()} {"\u00b0"} {isFahrenheit ? "F" : "C"}
         </Text>
       </View>
     );
