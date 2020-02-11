@@ -107,6 +107,16 @@ class App extends React.Component {
   UNSAFE_componentWillMount() {
     this.fetchWeatherData();
   }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.fetchWeatherData();
+    }, 60000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 }
 
 const styles = StyleSheet.create({
