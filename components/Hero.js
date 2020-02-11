@@ -21,7 +21,7 @@ class Hero extends React.Component {
     const conversion = isFahrenheit
       ? ConversionService.kelvinToF
       : ConversionService.kelvinToC;
-    return `${conversion(todayWeather.main.temp)}`;
+    return `${conversion(todayWeather.main.feels_like)}`;
   }
 }
 

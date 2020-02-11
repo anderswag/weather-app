@@ -18,7 +18,8 @@ class App extends React.Component {
   state = {
     weatherData: undefined,
     isFahrenheit: true,
-    zipCode: "11201"
+    zipCode: "11201",
+    isLoading: true
   };
 
   render() {
@@ -30,7 +31,10 @@ class App extends React.Component {
   }
 
   renderContent() {
-    const { weatherData, isFahrenheit, zipCode } = this.state;
+    const { isLoading, weatherData, isFahrenheit, zipCode } = this.state;
+    if (isLoading) {
+      <View />;
+    }
     return (
       <View>
         {weatherData && (
@@ -91,9 +95,11 @@ class App extends React.Component {
   }
 
   fetchWeatherData() {
+    this.setState({ isLoading: true });
     ApiService.fetchData(this.state.zipCode).then(data => {
       this.setState({
-        weatherData: data
+        weatherData: data,
+        isLoading: false
       });
     });
   }
