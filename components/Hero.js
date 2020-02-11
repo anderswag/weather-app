@@ -17,9 +17,10 @@ class Hero extends React.Component {
   }
 
   getTemperature() {
-    const { todayWeather, unit } = this.props;
-    const conversion =
-      unit === "F" ? ConversionService.kelvinToF : ConversionService.kelvinToC;
+    const { todayWeather, isFahrenheit } = this.props;
+    const conversion = isFahrenheit
+      ? ConversionService.kelvinToF
+      : ConversionService.kelvinToC;
     return `${conversion(todayWeather.main.temp)}`;
   }
 }

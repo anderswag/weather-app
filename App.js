@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, Switch, View } from "react-native";
 import ApiService from "./services/api";
 
 import Hero from "./components/Hero";
@@ -8,23 +8,49 @@ import WeatherList from "./components/WeatherList";
 class App extends React.Component {
   state = {
     weatherData: undefined,
-    unit: "F"
+    isFahrenheit: true
   };
 
   render() {
-    const { weatherData, unit } = this.state;
+    const { weatherData, isFahrenheit } = this.state;
     return (
       <View style={styles.container}>
         {weatherData && (
           <Hero
             cityName={weatherData.city.name}
             todayWeather={weatherData.list[0]}
-            unit={unit}
+            isFahrenheit={isFahrenheit}
           />
         )}
-        {weatherData && <WeatherList list={weatherData.list} unit={unit} />}
+        {weatherData && (
+          <WeatherList list={weatherData.list} isFahrenheit={isFahrenheit} />
+        )}
+        {this.renderSwitch()}
       </View>
     );
+  }
+
+  renderSwitch() {
+    return (
+      <View style={styles.switch}>
+        <Switch
+          value={this.state.isFahrenheit}
+          onValueChange={switchValue =>
+            this.setState({ isFahrenheit: switchValue })
+          }
+        />
+        <Text style={styles.switchText}>
+          {this.state.isFahrenheit ? "F" : "C"}
+        </Text>
+      </View>
+    );
+  }
+
+  handleSwitchUnit() {
+    const { isFahrenheit } = this.props;
+    this.setState({
+      unit: !isFahrenheit
+    });
   }
 
   fetchWeatherData() {
@@ -46,6 +72,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 20,
     alignItems: "center"
+  },
+  switch: {
+    flex: 1,
+    width: "100%",
+    flexDirection: "row"
+  },
+  switchText: {
+    marginLeft: 10,
+    fontSize: 24
   }
 });
 

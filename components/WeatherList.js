@@ -48,9 +48,10 @@ class WeatherList extends React.Component {
   }
 
   getConvertedTemperature(temperature) {
-    const { unit } = this.props;
-    const conversion =
-      unit === "F" ? ConversionService.kelvinToF : ConversionService.kelvinToC;
+    const { isFahrenheit } = this.props;
+    const conversion = isFahrenheit
+      ? ConversionService.kelvinToF
+      : ConversionService.kelvinToC;
     return conversion(temperature);
   }
 
