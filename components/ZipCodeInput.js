@@ -18,7 +18,10 @@ class ZipCodeInput extends React.Component {
           onChangeText={text => this.onChangeText(text)}
           value={zipCode}
         />
-        <TouchableHighlight style={styles.button} onPress={() => this.onSubmit}>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => this.onSubmit()}
+        >
           <Text>Search</Text>
         </TouchableHighlight>
       </View>
