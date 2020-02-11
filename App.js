@@ -1,20 +1,29 @@
 import React from "react";
-import { StyleSheet, Text, Switch, View } from "react-native";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  Text,
+  ScrollView,
+  Switch,
+  View
+} from "react-native";
 import ApiService from "./services/api";
 
 import Hero from "./components/Hero";
 import WeatherList from "./components/WeatherList";
+import ZipCodeInput from "./components/ZipCodeInput";
 
 class App extends React.Component {
   state = {
     weatherData: undefined,
-    isFahrenheit: true
+    isFahrenheit: true,
+    zipCode: "11201"
   };
 
   render() {
-    const { weatherData, isFahrenheit } = this.state;
+    const { weatherData, isFahrenheit, zipCode } = this.state;
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {weatherData && (
           <Hero
             cityName={weatherData.city.name}
@@ -26,7 +35,16 @@ class App extends React.Component {
           <WeatherList list={weatherData.list} isFahrenheit={isFahrenheit} />
         )}
         {this.renderSwitch()}
-      </View>
+        {weatherData && (
+          <KeyboardAvoidingView behavior="position">
+            <ZipCodeInput
+              zipCode={zipCode}
+              onInput={text => this.handleInput(text)}
+              onSubmit={() => this.handleSearch()}
+            />
+          </KeyboardAvoidingView>
+        )}
+      </ScrollView>
     );
   }
 
@@ -53,8 +71,18 @@ class App extends React.Component {
     });
   }
 
+  handleInput(text) {
+    this.setState({
+      zipCode: text
+    });
+  }
+
+  handleSearch() {
+    this.fetchWeatherData();
+  }
+
   fetchWeatherData() {
-    ApiService.fetchData("90210").then(data => {
+    ApiService.fetchData(this.state.zipCode).then(data => {
       this.setState({
         weatherData: data
       });
@@ -70,11 +98,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 20,
-    alignItems: "center"
+    paddingHorizontal: 20
   },
   switch: {
-    flex: 1,
     width: "100%",
     flexDirection: "row"
   },

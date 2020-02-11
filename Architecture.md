@@ -1,9 +1,9 @@
 Core features
 
-- Shows list of weather for next week
+- Shows list of weather for next week ✅
 - Shows weather for current ZipCode
 - Can input zipcode to update weather
-- Toggle button to toggle between Celcius and Farenheit
+- Toggle button to toggle between Celcius and Farenheit ✅
 - Every minute it fetches new data
 
 Important Data points

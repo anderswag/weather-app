@@ -21,6 +21,7 @@ class WeatherList extends React.Component {
         <FlatList
           data={list}
           renderItem={({ item, index }) => this.renderListItem(item, index)}
+          keyExtractor={item => `${item.dt}`}
         />
       </View>
     );
