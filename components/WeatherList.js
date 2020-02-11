@@ -48,7 +48,7 @@ class WeatherList extends React.Component {
   }
 
   getConvertedTemperature(temperature) {
-    return Math.ceil(ConversionService.kelvinToC(temperature));
+    return ConversionService.kelvinToC(temperature);
   }
 
   getDayOfWeek(timestamp) {

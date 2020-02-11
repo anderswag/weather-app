@@ -14,7 +14,12 @@ class App extends React.Component {
     const { weatherData } = this.state;
     return (
       <View style={styles.container}>
-        {weatherData && <Hero list={weatherData.list} />}
+        {weatherData && (
+          <Hero
+            cityName={weatherData.city.name}
+            todayWeather={weatherData.list[0]}
+          />
+        )}
         {weatherData && <WeatherList list={weatherData.list} />}
       </View>
     );

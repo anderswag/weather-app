@@ -1,15 +1,24 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import ConversionService from "../services/conversion";
 
 class Hero extends React.Component {
   render() {
+    const { cityName, todayWeather } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.locationText}>Brooklyn</Text>
-        <Text style={styles.weatherText}>Partly Cloudy</Text>
-        <Text style={styles.temperatureText}>36 {"\u00b0"}</Text>
+        <Text style={styles.locationText}>{cityName}</Text>
+        <Text style={styles.weatherText}>{todayWeather.weather[0].main}</Text>
+        <Text style={styles.temperatureText}>
+          {this.getTemperature()} {"\u00b0"}
+        </Text>
       </View>
     );
+  }
+
+  getTemperature() {
+    const { todayWeather } = this.props;
+    return `${ConversionService.kelvinToF(todayWeather.main.temp)}`;
   }
 }
 
