@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { View, FlatList, StyleSheet, Text } from "react-native";
 
 import ConversionService from "../services/conversion";
 
@@ -15,29 +15,36 @@ const DAYS_OF_WEEK = [
 
 class WeatherList extends React.Component {
   render() {
-    return <View style={styles.container}>{this.renderList()}</View>;
+    const { list } = this.props;
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={list}
+          renderItem={({ item, index }) => this.renderListItem(item, index)}
+        />
+      </View>
+    );
   }
 
-  renderList() {
-    const { list } = this.props;
-    return list.map((item, index) => {
-      return (
-        <View style={styles.item} key={item.dt}>
-          <Text>{`${this.getDayOfWeek(item.dt)} ${
-            index === 0 ? "(today)" : ""
-          }`}</Text>
-          <View style={styles.item__right}>
-            <Text style={{ width: 70 }}>{item.weather[0].main}</Text>
-            <Text style={{ width: 20 }}>
-              {this.getConvertedTemperature(item.temp.max)}
-            </Text>
-            <Text style={{ width: 20 }}>
-              {this.getConvertedTemperature(item.temp.min)}
-            </Text>
-          </View>
+  renderListItem(item, index) {
+    return (
+      <View style={styles.item} key={item.dt}>
+        <Text>{`${this.getDayOfWeek(item.dt)} ${
+          index === 0 ? "(today)" : ""
+        }`}</Text>
+        <View style={styles.item__right}>
+          <Text style={{ width: 70, textAlign: "right" }}>
+            {item.weather[0].main}
+          </Text>
+          <Text style={styles.temp}>
+            {this.getConvertedTemperature(item.main.temp_max)}
+          </Text>
+          <Text style={[styles.temp, { color: "grey" }]}>
+            {this.getConvertedTemperature(item.main.temp_min)}
+          </Text>
         </View>
-      );
-    });
+      </View>
+    );
   }
 
   getConvertedTemperature(temperature) {
@@ -53,20 +60,23 @@ class WeatherList extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%"
+    width: "100%",
+    height: 400
   },
   item: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "100%",
     height: 40
-    // backgroundColor: "pink"
   },
   item__right: {
+    color: "black",
     width: "50%",
     justifyContent: "space-around",
     flexDirection: "row"
-    // backgroundColor: "red"
+  },
+  temp: {
+    textAlign: "right",
+    width: 20
   }
 });
 
